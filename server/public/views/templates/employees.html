@@ -1,3 +1,56 @@
 <h1>Employees View</h1>
 
 <p>{{ec.message}}</p>
+
+<section class="container">
+  <h3>Add an Employee</h3>
+  <form class="col-md-12 input-group">
+    <div class="form-group col-xs-6">
+      <label for="firstName">First Name</label>
+      <input type="text" name="firstName" class="form-control" ng-model="ec.newPerson.firstName" placeholder="First Name"/>
+    </div>
+    <div class="form-group col-xs-6">
+      <label for="lastName">Last Name</label>
+      <input type="text" name="lastName" class="form-control" ng-model="ec.newEmployee.lastName" placeholder="Last Name"/>
+    </div>
+    <div class="form-group col-xs-6">
+      <label for="employeeID">Employee ID</label>
+      <input type="text" name="employeeID" class="form-control" ng-model="ec.newEmployee.employeeID" placeholder="ID Number"/>
+    </div>
+    <div class="form-group col-xs-6">
+      <label for="jobTitle">Job Title</label>
+      <input type="text" name="jobTitle" class="form-control" ng-model="ec.newEmployee.jobTitle" placeholder="Title"/>
+    </div>
+    <div class="form-group col-xs-6">
+      <label for="salary">Salary</label>
+      <input type="text" name="salary" class="form-control" ng-model="ec.newEmployee.salary" placeholder="Salary ($)"/>
+    </div>
+  </form>
+    <div class="text-left col-xs-6">
+      <button type="button" class="btn btn-primary" ng-click="">Add Employee</button>
+    </div>
+</section>
+
+<section class ="container">
+  <h3>Employee List</h3>
+  <table class="table">
+    <thead class = "thead-default">
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Employee ID</th>
+        <th>Job Title</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="employee in ec.employees.list">
+        <th scope="row">{{employee.first_name}}</th>
+        <th>{{employee.last_name}}</th>
+        <th>{{employee.employee_number}}</th>
+        <th>{{employee.job_title}}</th>
+        <th>{{employee.status}}</th>
+      </tr>
+    </tbody>
+  </table>
+</section>
