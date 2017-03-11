@@ -5,10 +5,13 @@ myApp.controller('EmployeesController', ['DataFactory', function(DataFactory) {
 
   self.message = "Welcome to the Employees View";
 
-  self.newEmployee = {};
-
-  DataFactory.getEmployees();
-
   self.employees = DataFactory.employees;
 
+  self.newEmployee = {};
+
+  self.addEmployee = function () {
+    console.log('add employee button clicked');
+    DataFactory.addEmployee(self.newEmployee);
+    self.newEmployee = {};
+  };
 }]);

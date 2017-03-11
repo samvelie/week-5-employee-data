@@ -14,13 +14,13 @@ var pool = new pg.Pool(config);
 router.get('/employees', function(req, res) {
   console.log('hit my get for employees route');
   pool.connect(function(err, client, done) {
-    if(err){
+    if(err) {
       console.log(err);
       res.sendStatus(500);
     } else {
       client.query('SELECT * FROM employees;', function (err, result) {
         done();
-        if(err){
+        if(err) {
           console.log(err);
           res.sendStatus(500);
         } else {
@@ -30,6 +30,11 @@ router.get('/employees', function(req, res) {
       }); // end client.query
     }
   });
-})//end router.get
+});//end router.get
+
+router.post('/employees', function(req,res) {
+  console.log('hit my post employees route');
+  console.log(req.body);
+});
 
 module.exports = router;

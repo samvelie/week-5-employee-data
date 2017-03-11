@@ -6,6 +6,20 @@ myApp.factory('DataFactory', ['$http', function($http) {
     yearSalary: 0
   };
 
+  getEmployeeData();
+
+  function addEmployeeData(newEmployee){
+    $http({
+      method: 'POST',
+      url: '/data/employees',
+      data: newEmployee
+    }).then(function(response){
+      console.log('put response', response);
+      getEmployeeData();
+    });
+  }
+
+
   function getEmployeeData(){
     $http({
       method: 'GET',
@@ -28,6 +42,7 @@ myApp.factory('DataFactory', ['$http', function($http) {
 
   return {
     employees: employeeData,
-    getEmployees: getEmployeeData
+    getEmployees: getEmployeeData,
+    addEmployee: addEmployeeData
   };
 }]);
