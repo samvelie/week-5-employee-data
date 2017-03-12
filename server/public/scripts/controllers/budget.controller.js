@@ -28,10 +28,10 @@ myApp.controller('BudgetController', ['DataFactory', function(DataFactory) {
     }
   };
 
-  self.setNewBudget = function (){
+  self.addNewBudget = function (){
     self.newBudget.date= self.newBudget.getDate();
-    console.log(self.newBudget.date);
-  }
+    DataFactory.addBudget(self.newBudget);
+  };
 
 
 }]);

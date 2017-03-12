@@ -85,6 +85,10 @@ myApp.factory('DataFactory', ['$http', function($http) {
     console.log('currentBudget:', currentBudget);
   }
 
+  function addBudgetData(budgetObject) {
+    console.log('addBudgetData in use with', budgetObject);
+  }
+
   function yearlyTotal(employeeArray) {
     var salaryTotal = 0;
     for (var i = 0; i < employeeArray.length; i++) {
@@ -105,6 +109,7 @@ myApp.factory('DataFactory', ['$http', function($http) {
     activateEmployee: employeeActive,
     deactivateEmployee: employeeDeactive,
     useBudget: setBudget,
-    budget: currentBudget
+    budget: currentBudget,
+    addBudget: addBudgetData
   };
 }]);
