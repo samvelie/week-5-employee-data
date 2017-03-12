@@ -11,6 +11,27 @@ var config = {
 
 var pool = new pg.Pool(config);
 
+router.get('/budget', function(req, res) {
+  console.log('retrieving budget data');
+  pool.connect(function(err, client, done) {
+    if(err) {
+      console.log(err);
+      res.sendStatus(500);
+    } else {
+      client.query('SELECT * FROM budget;', function (err, result) {
+        done();
+        if(err) {
+          console.log(err);
+          res.sendStatus(500);
+        } else {
+          console.log(result.rows);
+          res.status(200).send(result.rows);
+        }
+      }); // end client.query
+    }
+  });
+});//end employees router.get
+
 router.get('/employees', function(req, res) {
   console.log('retrieving employee data');
   pool.connect(function(err, client, done) {

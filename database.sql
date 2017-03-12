@@ -9,7 +9,8 @@ active BOOLEAN DEFAULT TRUE);
 
 CREATE TABLE budget(
 id SERIAL PRIMARY KEY,
-budget_limit NUMERIC(16,2));
+budget_limit NUMERIC(16,2),
+date DATE UNIQUE);
 
 -- filler data
 
@@ -20,5 +21,5 @@ VALUES ('Banana', 'Jones', 100, 'Operator', 33333.33),
 ('Avocado', 'Smith', 102, 'Descendant', 24000);
 
 INSERT INTO budget
-(budget_limit)
-VALUES (120000);
+(budget_limit, date)
+VALUES (120000, '2017-01-01');

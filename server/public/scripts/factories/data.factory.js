@@ -6,7 +6,15 @@ myApp.factory('DataFactory', ['$http', function($http) {
     yearSalary: 0
   };
 
+  var monthlyBudget = {
+    limits: []
+  };
+
+  var currentBudget = [0];
+
   getEmployeeData();
+
+  getBudgetData();
 
   function addEmployeeData(newEmployee) {
     $http({
@@ -14,7 +22,7 @@ myApp.factory('DataFactory', ['$http', function($http) {
       url: '/data/employees',
       data: newEmployee
     }).then(function(response){
-      console.log('put response', response);
+      console.log('add employee response:', response.data);
       getEmployeeData();
     });
   }
@@ -24,7 +32,7 @@ myApp.factory('DataFactory', ['$http', function($http) {
       method: 'DELETE',
       url: '/data/employees/' + employeeID
     }).then(function(response) {
-      console.log('delete response', response);
+      console.log('delete response:', response.data);
       getEmployeeData();
     });
   }
@@ -34,7 +42,7 @@ myApp.factory('DataFactory', ['$http', function($http) {
       method: 'PUT',
       url: '/data/activate/' + employeeID
     }).then(function(response) {
-      console.log('delete response', response);
+      console.log('activate response:', response.data);
       getEmployeeData();
     });
   }
@@ -44,7 +52,7 @@ myApp.factory('DataFactory', ['$http', function($http) {
       method: 'PUT',
       url: '/data/deactivate/' + employeeID
     }).then(function(response) {
-      console.log('delete response', response);
+      console.log('deactivate response:', response.data);
       getEmployeeData();
     });
   }
@@ -54,11 +62,27 @@ myApp.factory('DataFactory', ['$http', function($http) {
       method: 'GET',
       url: '/data/employees'
     }).then(function(response) {
-      console.log('response', response);
-      console.log('response.data', response.data);
+      console.log('employee get response:', response.data);
       employeeData.list = response.data;
       employeeData.yearSalary = yearlyTotal(employeeData.list);
     });
+  }
+
+  function getBudgetData() {
+    $http({
+      method: 'GET',
+      url: '/data/budget'
+    }).then(function(response) {
+      console.log('budget get response:', response.data);
+      monthlyBudget.limits = response.data;
+      currentBudget[0] = response.data[monthlyBudget.limits.length - 1].budget_limit;
+    });
+  }
+
+  function setBudget(amount) {
+    currentBudget.pop();
+    currentBudget.push(amount);
+    console.log('currentBudget:', currentBudget);
   }
 
   function yearlyTotal(employeeArray) {
@@ -71,12 +95,16 @@ myApp.factory('DataFactory', ['$http', function($http) {
     return salaryTotal;
   }
 
+
+
   return {
     employees: employeeData,
-    getEmployees: getEmployeeData,
+    budgetList: monthlyBudget,
     addEmployee: addEmployeeData,
     deleteEmployee: deleteEmployeeData,
     activateEmployee: employeeActive,
-    deactivateEmployee: employeeDeactive
+    deactivateEmployee: employeeDeactive,
+    useBudget: setBudget,
+    budget: currentBudget
   };
 }]);

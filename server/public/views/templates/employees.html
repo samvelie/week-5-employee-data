@@ -80,4 +80,8 @@
     <h5 class="text-right">${{ec.employees.yearSalary.toFixed(2)}}</h5>
   <h4 class="text-right">Monthly Salary Total</h4>
     <h5 class="text-right">${{(ec.employees.yearSalary/12).toFixed(2)}}</h5>
+  <h4 class="text-right">Monthly Budget</h4>
+    <h5 class="text-right">${{ec.monthlyBudget[0]}}</h5>
+  <h4 class="text-right">Budget Remaining</h4>
+    <h5 class="text-right">${{(ec.monthlyBudget[0] - (ec.employees.yearSalary/12)).toFixed(2)}}</h5>
 </section>

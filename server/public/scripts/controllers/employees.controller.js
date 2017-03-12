@@ -7,6 +7,8 @@ myApp.controller('EmployeesController', ['DataFactory', function(DataFactory) {
 
   self.employees = DataFactory.employees;
 
+  self.monthlyBudget = DataFactory.budget;
+
   self.newEmployee = {};
 
   self.addEmployee = function () {
