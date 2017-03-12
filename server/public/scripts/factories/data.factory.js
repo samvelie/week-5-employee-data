@@ -26,9 +26,28 @@ myApp.factory('DataFactory', ['$http', function($http) {
     }).then(function(response) {
       console.log('delete response', response);
       getEmployeeData();
-    })
+    });
   }
 
+  function employeeActive(employeeID) {
+    $http({
+      method: 'PUT',
+      url: '/data/activate/' + employeeID
+    }).then(function(response) {
+      console.log('delete response', response);
+      getEmployeeData();
+    });
+  }
+
+  function employeeDeactive(employeeID) {
+    $http({
+      method: 'PUT',
+      url: '/data/deactivate/' + employeeID
+    }).then(function(response) {
+      console.log('delete response', response);
+      getEmployeeData();
+    });
+  }
 
   function getEmployeeData() {
     $http({
@@ -45,7 +64,9 @@ myApp.factory('DataFactory', ['$http', function($http) {
   function yearlyTotal(employeeArray) {
     var salaryTotal = 0;
     for (var i = 0; i < employeeArray.length; i++) {
-      salaryTotal += parseFloat(employeeArray[i].salary);
+      if(employeeArray[i].active === true) {
+        salaryTotal += parseFloat(employeeArray[i].salary);
+      }
     }
     return salaryTotal;
   }
@@ -54,6 +75,8 @@ myApp.factory('DataFactory', ['$http', function($http) {
     employees: employeeData,
     getEmployees: getEmployeeData,
     addEmployee: addEmployeeData,
-    removeEmployee: deleteEmployeeData
+    deleteEmployee: deleteEmployeeData,
+    activateEmployee: employeeActive,
+    deactivateEmployee: employeeDeactive
   };
 }]);

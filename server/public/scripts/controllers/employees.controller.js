@@ -17,6 +17,16 @@ myApp.controller('EmployeesController', ['DataFactory', function(DataFactory) {
 
   self.deleteEmployee = function (employeeID) {
     console.log('delete employee clicked on', employeeID);
-    DataFactory.removeEmployee(employeeID);
-  }
+    DataFactory.deleteEmployee(employeeID);
+  };
+
+  self.activateEmployee = function(employeeID) {
+    console.log('activate employee clicked on', employeeID);
+    DataFactory.activateEmployee(employeeID);
+  };
+
+  self.deactivateEmployee = function(employeeID) {
+    console.log('deactive employee clicked on', employeeID);
+    DataFactory.deactivateEmployee(employeeID);
+  };
 }]);
