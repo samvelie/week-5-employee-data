@@ -1,16 +1,19 @@
 myApp.factory('DataFactory', ['$http', function($http) {
   console.log("data factory running");
 
-  var employeeData = {
+  var employeeData = {  //this variable is exported to the controllers with the total salary and list of employees
     list:[],
     yearSalary: 0
   };
 
-  var monthlyBudget = {
+  var monthlyBudget = { //this variable is exported to the controllers with the budget history as an array
     limits: []
   };
 
-  var currentBudget = [0];
+  var currentBudget = { //this variable defines the current monthly budget
+    amount: 0,
+    id:0
+  };
 
   getEmployeeData();
 
@@ -37,6 +40,7 @@ myApp.factory('DataFactory', ['$http', function($http) {
     });
   }
 
+//function which makes the active status true for a selected employee
   function employeeActive(employeeID) {
     $http({
       method: 'PUT',
@@ -47,6 +51,7 @@ myApp.factory('DataFactory', ['$http', function($http) {
     });
   }
 
+//function which makes the active status false for a selected employee
   function employeeDeactive(employeeID) {
     $http({
       method: 'PUT',
@@ -57,6 +62,7 @@ myApp.factory('DataFactory', ['$http', function($http) {
     });
   }
 
+//function which gets the employee information from the database, and updates the yearly salary total property on the object provided to the controllers
   function getEmployeeData() {
     $http({
       method: 'GET',
@@ -68,6 +74,7 @@ myApp.factory('DataFactory', ['$http', function($http) {
     });
   }
 
+//function that grabs the budget history from the db, and sets the current budget to the latest budget set
   function getBudgetData() {
     $http({
       method: 'GET',
@@ -75,20 +82,32 @@ myApp.factory('DataFactory', ['$http', function($http) {
     }).then(function(response) {
       console.log('budget get response:', response.data);
       monthlyBudget.limits = response.data;
-      currentBudget[0] = response.data[monthlyBudget.limits.length - 1].budget_limit;
+      var indexOfLatestBudget = monthlyBudget.limits.length - 1;
+      setBudget(monthlyBudget.limits[indexOfLatestBudget].budget_limit, monthlyBudget.limits[indexOfLatestBudget].id);
     });
   }
 
-  function setBudget(amount) {
-    currentBudget.pop();
-    currentBudget.push(amount);
+//this function updates the current budget array with whatever is passed
+  function setBudget(amount, id) {
+    currentBudget.amount = amount;
+    currentBudget.id = id;
     console.log('currentBudget:', currentBudget);
   }
 
+//function for adding a budget to the database
   function addBudgetData(budgetObject) {
     console.log('addBudgetData in use with', budgetObject);
+    $http({
+      method: 'POST',
+      url: '/data/budget',
+      data: budgetObject
+    }).then(function(response){
+      console.log('bugdget post response:', response.data);
+      getBudgetData();
+    });
   }
 
+//function that only totals the active employees' salaries
   function yearlyTotal(employeeArray) {
     var salaryTotal = 0;
     for (var i = 0; i < employeeArray.length; i++) {
@@ -98,7 +117,6 @@ myApp.factory('DataFactory', ['$http', function($http) {
     }
     return salaryTotal;
   }
-
 
 
   return {

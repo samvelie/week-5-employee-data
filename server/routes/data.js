@@ -18,7 +18,7 @@ router.get('/budget', function(req, res) {
       console.log(err);
       res.sendStatus(500);
     } else {
-      client.query('SELECT * FROM budget;', function (err, result) {
+      client.query('SELECT * FROM budget ORDER BY DATE;', function (err, result) {
         done();
         if(err) {
           console.log(err);
@@ -30,7 +30,31 @@ router.get('/budget', function(req, res) {
       }); // end client.query
     }
   });
-});//end employees router.get
+});//end budget router.get
+
+router.post('/budget', function(req, res) {
+  var budgetInfo = req.body;
+  console.log('adding budget data', budgetInfo);
+  pool.connect(function(err, client, done) {
+    if(err) {
+      console.log(err);
+      res.sendStatus(500);
+    } else {
+      client.query('INSERT INTO budget(budget_limit, date) VALUES($1, $2);',
+        [budgetInfo.limit, budgetInfo.date],
+        function (err, result) {
+        done();
+        if(err) {
+          console.log(err);
+          res.sendStatus(500);
+        } else {
+          console.log(result.rows);
+          res.status(200).send(result.rows);
+        }
+      }); // end client.query
+    }
+  });
+});//end budget router.get
 
 router.get('/employees', function(req, res) {
   console.log('retrieving employee data');

@@ -9,15 +9,17 @@
     </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="item in bc.budgetHistory.limits">
+    <tr ng-repeat="item in bc.budgetHistory.limits" ng-class="{'bg-success': (item.id == bc.selectedBudget.id)}">
       <td>{{bc.convertDate(item.date)}}</td>
       <td>{{item.budget_limit}}</td>
-      <td><button ng-click="bc.selectBudget(item.budget_limit)">Use this Budget</button></td>
+      <td><button ng-click="bc.selectBudget(item.budget_limit, item.id)">Use this Budget</button></td>
     </tr>
   </tbody>
 </table>
 <h3 class="text-center">Selected Monthly Budget</h3>
-<h4 class="text-center">${{bc.selectedBudget[0]}}</h4>
+<h4 class="text-center">${{bc.selectedBudget.amount}}</h4>
+
+
 <div class="form-group">
   <label for="budgetInput">Enter Monthly Budget Limit:</label>
   <input ng-model="bc.newBudget.limit" type="number" class="form-control" id="budgetInput">
@@ -52,5 +54,3 @@
 </div>
 
 <button ng-click="bc.addNewBudget()">Set New Budget</button>
-
-{{bc.newBudget}}
