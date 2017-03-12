@@ -8,7 +8,7 @@ myApp.factory('DataFactory', ['$http', function($http) {
 
   getEmployeeData();
 
-  function addEmployeeData(newEmployee){
+  function addEmployeeData(newEmployee) {
     $http({
       method: 'POST',
       url: '/data/employees',
@@ -19,12 +19,22 @@ myApp.factory('DataFactory', ['$http', function($http) {
     });
   }
 
+  function deleteEmployeeData(employeeID) {
+    $http({
+      method: 'DELETE',
+      url: '/data/employees/' + employeeID
+    }).then(function(response) {
+      console.log('delete response', response);
+      getEmployeeData();
+    })
+  }
 
-  function getEmployeeData(){
+
+  function getEmployeeData() {
     $http({
       method: 'GET',
       url: '/data/employees'
-    }).then(function(response){
+    }).then(function(response) {
       console.log('response', response);
       console.log('response.data', response.data);
       employeeData.list = response.data;
@@ -32,7 +42,7 @@ myApp.factory('DataFactory', ['$http', function($http) {
     });
   }
 
-  function yearlyTotal(employeeArray){
+  function yearlyTotal(employeeArray) {
     var salaryTotal = 0;
     for (var i = 0; i < employeeArray.length; i++) {
       salaryTotal += parseFloat(employeeArray[i].salary);
@@ -43,6 +53,7 @@ myApp.factory('DataFactory', ['$http', function($http) {
   return {
     employees: employeeData,
     getEmployees: getEmployeeData,
-    addEmployee: addEmployeeData
+    addEmployee: addEmployeeData,
+    removeEmployee: deleteEmployeeData
   };
 }]);

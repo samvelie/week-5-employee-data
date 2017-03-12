@@ -14,4 +14,9 @@ myApp.controller('EmployeesController', ['DataFactory', function(DataFactory) {
     DataFactory.addEmployee(self.newEmployee);
     self.newEmployee = {};
   };
+
+  self.deleteEmployee = function (employeeID) {
+    console.log('delete employee clicked on', employeeID);
+    DataFactory.removeEmployee(employeeID);
+  }
 }]);

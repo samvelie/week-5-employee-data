@@ -12,7 +12,7 @@ var config = {
 var pool = new pg.Pool(config);
 
 router.get('/employees', function(req, res) {
-  console.log('hit my get for employees route');
+  console.log('retrieving employee data');
   pool.connect(function(err, client, done) {
     if(err) {
       console.log(err);
@@ -33,9 +33,8 @@ router.get('/employees', function(req, res) {
 });//end employees router.get
 
 router.post('/employees', function(req,res) {
-  console.log('hit my post employees route');
   var newEmployee = req.body;
-  console.log(newEmployee + ' being added');
+  console.log('adding new employee:', newEmployee);
   pool.connect(function(err, client, done) {
     if(err) {
       console.log(err);
@@ -56,5 +55,29 @@ router.post('/employees', function(req,res) {
       }
   });//end pool.connect
 });//end employees router.post
+
+router.delete('/employees/:id', function(req,res) {
+  var idOfEmployeeToDelete = req.params.id;
+  console.log('deleting employee with id#',  idOfEmployeeToDelete);
+  pool.connect(function(err, client, done) {
+    if(err) {
+      console.log(err);
+      res.sendStatus(500);
+    } else {
+        client.query('DELETE FROM employees WHERE id=$1;',
+          [idOfEmployeeToDelete],
+          function(err, result) {
+            done();
+            if(err) {
+              console.log(err);
+              res.sendStatus(500);
+            } else {
+                res.sendStatus(200);
+              }
+          }
+        );
+      }
+  });//end pool.connect
+});//end employees router.delete
 
 module.exports = router;
