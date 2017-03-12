@@ -1,6 +1,7 @@
 <h1>Budget View</h1>
 
-<table class="table table-striped">
+<section class = "container">
+<table class="table table-inverse">
   <thead class="thead-inverse">
     <tr>
       <th>Year-Month</th>
@@ -16,10 +17,11 @@
     </tr>
   </tbody>
 </table>
-<h3 class="text-center">Selected Monthly Budget</h3>
-<h4 class="text-center">${{bc.selectedBudget.amount}}</h4>
+<h3>Selected Monthly Budget: ${{bc.selectedBudget.amount}}</h3>
+</section>
 
-
+<section class = "container">
+<h2>Create New Budget</h2>
 <div class="form-group">
   <label for="budgetInput">Enter Monthly Budget Limit:</label>
   <input ng-model="bc.newBudget.limit" type="number" class="form-control" id="budgetInput">
@@ -53,4 +55,5 @@
   </select>
 </div>
 
-<button ng-click="bc.addNewBudget()">Set New Budget</button>
+<button class="btn btn-primary" ng-click="bc.addNewBudget()">Set New Budget</button>
+</section>

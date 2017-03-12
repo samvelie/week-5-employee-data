@@ -1,9 +1,7 @@
 <h1>Employees View</h1>
 
-<p>{{ec.message}}</p>
-
 <section class="container">
-  <h3>Add an Employee</h3>
+  <h3>Add Employee</h3>
   <form>
     <div class="form-inline col-sm-12">
       <label for="firstName" class="col-sm-2 col-form-label">First Name</label>
@@ -46,7 +44,7 @@
 <section class ="container">
   <h3>Employee List</h3>
   <table class="table">
-    <thead class = "thead-default">
+    <thead class = "thead-inverse">
       <tr>
         <th>First Name</th>
         <th>Last Name</th>
@@ -58,7 +56,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="employee in ec.employees.list" ng-class="{'table-danger': !employee.active}">
+      <tr ng-repeat="employee in ec.employees.list" ng-class="{'bg-warning': !employee.active}">
         <th>{{employee.first_name}}</th>
         <th>{{employee.last_name}}</th>
         <th>{{employee.employee_number}}</th>
@@ -76,12 +74,23 @@
 
 
 <section class="container">
-  <h4 class="text-right">Yearly Salary Total</h4>
-    <h5 class="text-right">${{ec.employees.yearSalary.toFixed(2)}}</h5>
-  <h4 class="text-right">Monthly Salary Total</h4>
-    <h5 class="text-right">${{(ec.employees.yearSalary/12).toFixed(2)}}</h5>
-  <h4 class="text-right">Monthly Budget</h4>
-    <h5 class="text-right">${{ec.monthlyBudget[0]}}</h5>
-  <h4 class="text-right">Budget Remaining</h4>
-    <h5 class="text-right">${{(ec.monthlyBudget[0] - (ec.employees.yearSalary/12)).toFixed(2)}}</h5>
+  <h3>Budget At A Glance</h3>
+  <table class="table table-bordered">
+    <thead class ="thead-special thead-inverse">
+      <tr>
+        <th>Yearly Salary Total</th>
+        <th>Monthly Salary Total</th>
+        <th>Selected Monthly Budget Limit</th>
+        <th>Budget Remaining</th>
+      </tr>
+    </thead>
+    <tbody class = "tbody-special">
+      <tr>
+        <td>${{ec.employees.yearSalary.toFixed(2)}}</td>
+        <td>${{(ec.employees.yearSalary/12).toFixed(2)}}</td>
+        <td>${{ec.monthlyBudget.amount}}</td>
+        <td ng-class="{negative: (ec.monthlyBudget.amount - (ec.employees.yearSalary/12)) < 0}">${{(ec.monthlyBudget.amount - (ec.employees.yearSalary/12)).toFixed(2)}}</td>
+      </tr>
+    </tbody>
+  </table>
 </section>

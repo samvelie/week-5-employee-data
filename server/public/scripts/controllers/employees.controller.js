@@ -3,8 +3,6 @@ myApp.controller('EmployeesController', ['DataFactory', function(DataFactory) {
 
   var self = this;
 
-  self.message = "Welcome to the Employees View";
-
   self.employees = DataFactory.employees;
 
   self.monthlyBudget = DataFactory.budget;

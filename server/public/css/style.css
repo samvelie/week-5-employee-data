@@ -1,4 +1,35 @@
+body {
+  background-color: #f2f2ff;
+}
+
+h1  {
+  text-align: center;
+}
+
+.container {
+  padding: 15px;
+
+}
+
 .navbar-link {
   padding-left: 20px;
   padding-right: 20px;
+}
+
+.table-bordered td {
+  border: 1px double #ccc7cb;
+  background-color: white;
+}
+
+.thead-special {
+  font-size: 1.3em;
+}
+
+.tbody-special {
+  font-size: 1.2em;
+  text-align: right;
+}
+
+.negative {
+  color: red;
 }
