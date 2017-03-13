@@ -12,12 +12,12 @@
   <tbody>
     <tr ng-repeat="item in bc.budgetHistory.limits" ng-class="{'bg-success': (item.id == bc.selectedBudget.id)}">
       <td>{{bc.convertDate(item.date)}}</td>
-      <td>{{item.budget_limit}}</td>
+      <td>{{item.budget_limit | currency: "$"}}</td>
       <td><button ng-click="bc.selectBudget(item.budget_limit, item.id)">Use this Budget</button></td>
     </tr>
   </tbody>
 </table>
-<h3>Selected Monthly Budget: ${{bc.selectedBudget.amount}}</h3>
+<h3>Selected Monthly Budget: {{bc.selectedBudget.amount | currency: "$"}}</h3>
 </section>
 
 <section class = "container">

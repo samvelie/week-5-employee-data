@@ -61,7 +61,7 @@
         <th>{{employee.last_name}}</th>
         <th>{{employee.employee_number}}</th>
         <th>{{employee.job_title}}</th>
-        <th>{{employee.salary}}</th>
+        <th>{{employee.salary | currency: "$"}}</th>
         <th>
           <button class="btn btn-sm btn-warning" ng-click="ec.deactivateEmployee(employee.id)" ng-show="employee.active">Deactivate</button>
           <button class="btn btn-sm btn-info" ng-click="ec.activateEmployee(employee.id)" ng-show="!employee.active">Activate</button>
@@ -86,9 +86,9 @@
     </thead>
     <tbody class = "tbody-special">
       <tr>
-        <td>${{ec.employees.yearSalary.toFixed(2)}}</td>
-        <td>${{(ec.employees.yearSalary/12).toFixed(2)}}</td>
-        <td>${{ec.monthlyBudget.amount}}</td>
+        <td>{{ec.employees.yearSalary.toFixed(2) | currency: "$"}}</td>
+        <td>{{(ec.employees.yearSalary/12).toFixed(2) | currency: "$"}}</td>
+        <td>{{ec.monthlyBudget.amount | currency: "$"}}</td>
         <td ng-class="{negative: (ec.monthlyBudget.amount - (ec.employees.yearSalary/12)) < 0}">${{(ec.monthlyBudget.amount - (ec.employees.yearSalary/12)).toFixed(2)}}</td>
       </tr>
     </tbody>
